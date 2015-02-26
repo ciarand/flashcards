@@ -1,0 +1,23 @@
+- Document the format expected in flashcards.txt
+- Write tests for format expected
+
+- Switch to a JSON API-based backend
+- Add ability to create static sites by "compiling" flashcards.txt
+
+- Hack together a UI layer
+- Add ability to mark a question answered correctly / incorrectly
+- Use JS / local storage to track % answered correctly
+- Add ability to look at various stats / graphs concerning performance
+
+- Add ability to filter card collection based on tags
+- Add ability to shuffle a new set of cards based on provided criteria (i.e.
+  "include tags foo and bar but exclude anything that has tag baz")
+
+- Add support for different $PORTS
+- Add support for running from the CLI (termbox)
+- Add support for printing stats from the CLI
+
+- Add Procfile
+
+- Add build process to concat / minify CSS and JS
+- Add build process to pack assets into binary

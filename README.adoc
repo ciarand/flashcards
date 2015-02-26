@@ -1,13 +1,13 @@
 Flashcards
 ==========
 Ciaran Downey <code@ciarand.me>
-:toc:
-
-NOTE: This forreals is not ready for anyone to use. That's not a "beta" warning
-or whatever, that's a I'm-not-promising-this-will-compile-for-now warning.
+:toc: auto
+:toc-placement: preamble
 
 [quote]
 A tiny app to help you study
+
+toc::[]
 
 Getting started
 ---------------
@@ -32,7 +32,6 @@ For regular people:
 For nerds:
 
 . `go get github.com/ciarand/flashcards`
-
 
 Changing the cards
 ------------------
