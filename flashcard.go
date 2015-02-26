@@ -24,12 +24,39 @@ type flashcard struct {
 
 type server struct {
 	repo repo
+	pool *bpool
+}
+
+type bpool struct {
+	ch chan *bytes.Buffer
+}
+
+func newPool(count int) *bpool {
+	return &bpool{make(chan *bytes.Buffer, count)}
+}
+
+func (b *bpool) get() *bytes.Buffer {
+	select {
+	case buf := <-b.ch:
+		return buf
+	default:
+		return bytes.NewBuffer([]byte{})
+	}
+}
+
+func (b *bpool) put(buf *bytes.Buffer) {
+	buf.Reset()
+
+	select {
+	case b.ch <- buf:
+	default:
+	}
 }
 
 type flashcardSlice []flashcard
 
 type repo interface {
-	all() (flashcardSlice, error)
+	all() (*flashcardSlice, error)
 }
 
 func internalServerError(w http.ResponseWriter, err error) {
@@ -54,13 +81,10 @@ func (h *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	// write to a buffer so template errors can be correctly rendered without
 	// already having mucked with the response
-	//
-	// totally guessing on the length thing here
-	//
-	// TODO: maybe add some logging or w/e to auto-adjust the buffer size?
-	buf := bytes.NewBuffer(make([]byte, 0, 8048))
+	buf := h.pool.get()
+	defer h.pool.put(buf)
 
-	err = tpl.ExecuteTemplate(buf, "flashcards", struct{ Cards flashcardSlice }{cards})
+	err = tpl.ExecuteTemplate(buf, "flashcards", struct{ Cards flashcardSlice }{*cards})
 	if err != nil {
 		internalServerError(w, err)
 		return
@@ -68,6 +92,9 @@ func (h *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/html")
 	w.WriteHeader(200)
+
+	// if any error occurs when we're copying the response we can't really do
+	// a lot about it, so just print to console and be sad.
 	printerr(ignoreBytesWritten(io.Copy(w, buf)))
 }
 
@@ -75,7 +102,7 @@ type fileRepo struct {
 	file string
 }
 
-func (f flashcardSlice) add(c flashcard) error {
+func (f *flashcardSlice) add(c flashcard) error {
 	if c.Question == "" {
 		return fmt.Errorf("your card's question can't be blank (card started on line %d)", c.linenum)
 	}
@@ -84,12 +111,12 @@ func (f flashcardSlice) add(c flashcard) error {
 		return fmt.Errorf("cards need answers! (card started on line %d)", c.linenum)
 	}
 
-	f = append(f, c)
+	*f = append(*f, c)
 
 	return nil
 }
 
-func (f fileRepo) all() (flashcardSlice, error) {
+func (f *fileRepo) all() (*flashcardSlice, error) {
 	data, err := ioutil.ReadFile(f.file)
 	if err != nil {
 		return nil, err
@@ -98,8 +125,7 @@ func (f fileRepo) all() (flashcardSlice, error) {
 	buf := bytes.NewBuffer(data)
 
 	var line string
-	// assume a default size of 10, we can increase later
-	collection := make(flashcardSlice, 0, 10)
+	collection := &flashcardSlice{}
 
 	linenum := 0
 	card := flashcard{linenum: linenum}
@@ -108,12 +134,21 @@ func (f fileRepo) all() (flashcardSlice, error) {
 		line, err = buf.ReadString('\n')
 		if err == io.EOF {
 			// save the most recent card
-			return append(collection, card), nil
+			return collection, collection.add(card)
 		} else if err != nil {
 			return nil, err
 		}
 
 		linenum++
+
+		save := func() error {
+			if err := collection.add(card); err != nil {
+				return err
+			}
+
+			card = flashcard{linenum: linenum}
+			return nil
+		}
 
 		switch {
 		// if the line is blank, ignore it
@@ -124,24 +159,27 @@ func (f fileRepo) all() (flashcardSlice, error) {
 			continue
 		case strings.HasPrefix(line, "QUESTION: "):
 			if card.Question != "" {
-				collection = append(collection, card)
-				card = flashcard{linenum: linenum}
+				if err := save(); err != nil {
+					return collection, err
+				}
 			}
 
 			card.Question = strings.TrimSpace(strings.TrimLeft(line, "QUESTION:"))
 
-		case strings.HasPrefix(line, "ANSWER:"):
+		case strings.HasPrefix(line, "ANSWER: "):
 			if card.Answer != "" {
-				collection = append(collection, card)
-				card = flashcard{linenum: linenum}
+				if err := save(); err != nil {
+					return collection, err
+				}
 			}
 
 			card.Answer = strings.TrimSpace(strings.TrimLeft(line, "ANSWER:"))
 
-		case strings.HasPrefix(line, "CLASS:"):
+		case strings.HasPrefix(line, "CLASS: "):
 			if card.Class != "" {
-				collection = append(collection, card)
-				card = flashcard{linenum: linenum}
+				if err := save(); err != nil {
+					return collection, err
+				}
 			}
 
 			card.Class = strings.TrimSpace(strings.TrimLeft(line, "CLASS:"))
@@ -159,7 +197,7 @@ func main() {
 func run() error {
 	mux := http.NewServeMux()
 
-	mux.Handle("/", &server{fileRepo{"flashcards.txt"}})
+	mux.Handle("/", &server{&fileRepo{"flashcards.txt"}, newPool(64)})
 
 	static := http.FileServer(http.Dir("./static"))
 	mux.Handle("/css/", static)
