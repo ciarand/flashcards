@@ -24,14 +24,15 @@ For regular people:
 
 . Run it. Double clicking will work, or you can execute it on the command line:
 
-For nerds:
-
-. `go get github.com/ciarand/flashcards`
-
 [source,bash]
 ----
 /wherever/you/put/it/flashcards
 ----
+
+For nerds:
+
+. `go get github.com/ciarand/flashcards`
+
 
 Changing the cards
 ------------------
