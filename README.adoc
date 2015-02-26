@@ -3,6 +3,9 @@ Flashcards
 Ciaran Downey <code@ciarand.me>
 :toc:
 
+NOTE: This forreals is not ready for anyone to use. That's not a "beta" warning
+or whatever, that's a I'm-not-promising-this-will-compile-for-now warning.
+
 [quote]
 A tiny app to help you study
 
@@ -21,10 +24,22 @@ For regular people:
 
 . Run it. Double clicking will work, or you can execute it on the command line:
 
+For nerds:
+
+. `go get github.com/ciarand/flashcards`
+
 [source,bash]
 ----
 /wherever/you/put/it/flashcards
 ----
+
+Changing the cards
+------------------
+TODO
+
+Using a different set of cards
+------------------------------
+TODO
 
 License
 -------

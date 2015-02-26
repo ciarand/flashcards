@@ -1,0 +1,7 @@
+QUESTION: A possible question!
+ANSWER: An interesting answer!
+CLASS: Whimsey and interest
+
+QUESTION: How does the universe work?
+ANSWER: That's not a super useful question
+CLASS: Silly questions
