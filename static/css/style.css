@@ -1,0 +1,297 @@
+@font-face {
+    font-family: ChunkFiveRegular;
+    src: url(/fonts/Chunkfive-webfont.eot);
+    src: url(/fonts/Chunkfive-webfont.eot?#iefix) format('embedded-opentype'),url(/fonts/Chunkfive-webfont.svg#ChunkFiveRegular) format('svg'),url(/fonts/Chunkfive-webfont.woff) format('woff'),url(/fonts/Chunkfive-webfont.ttf) format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family:AmaranthRegular;src:url(/fonts/Amaranth-webfont.eot);src:url(/fonts/Amaranth-webfont.eot?#iefix) format('embedded-opentype'),url(/fonts/Amaranth-webfont.woff) format('woff'),url(/fonts/Amaranth-webfont.ttf) format('truetype'),url(/fonts/Amaranth-webfont.svg#AmaranthRegular) format('svg');font-weight:400;font-style:normal;
+}
+
+@font-face {
+    font-family:AmaranthItalic;src:url(/fonts/Amaranth-Italic-webfont.eot);src:url(/fonts/Amaranth-Italic-webfont.eot?#iefix) format('embedded-opentype'),url(/fonts/Amaranth-Italic-webfont.woff) format('woff'),url(/fonts/Amaranth-Italic-webfont.ttf) format('truetype'),url(/fonts/Amaranth-Italic-webfont.svg#AmaranthItalic) format('svg');font-weight:400;font-style:italic;
+}
+
+@font-face {
+    font-family:AmaranthBold;src:url(/fonts/Amaranth-Bold-webfont.eot);src:url(/fonts/Amaranth-Bold-webfont.eot?#iefix) format('embedded-opentype'),url(/fonts/Amaranth-Bold-webfont.woff) format('woff'),url(/fonts/Amaranth-Bold-webfont.ttf) format('truetype'),url(/fonts/Amaranth-Bold-webfont.svg#AmaranthBold) format('svg');font-weight:700;font-style:normal;
+}
+
+@font-face {
+    font-family:AmaranthBoldItalic;src:url(/fonts/Amaranth-BoldItalic-webfont.eot);src:url(/fonts/Amaranth-BoldItalic-webfont.eot?#iefix) format('embedded-opentype'),url(/fonts/Amaranth-BoldItalic-webfont.woff) format('woff'),url(/fonts/Amaranth-BoldItalic-webfont.ttf) format('truetype'),url(/fonts/Amaranth-BoldItalic-webfont.svg#AmaranthBoldItalic) format('svg');font-weight:700;font-style:italic;
+}
+
+html {
+    font-size: 100%;
+    line-height: 1.5rem;
+    background-color: #333;
+    color: #fff;
+    text-shadow: 1px 1px 0 rgba(255,255,255,.2);
+}
+
+body {
+    font-family: AmaranthRegular,sans-serif;
+}
+
+.credits,.navigation,.switches {
+    display: none;
+}
+
+.ft-page {
+    padding: 2rem;
+    background-color: #424242;
+}
+
+.flowtime dd,.flowtime dl,.flowtime dt,.flowtime h1,.flowtime h2,.flowtime h3,.flowtime h4,.flowtime h5,.flowtime h6,.flowtime li,.flowtime ol,.flowtime p,.flowtime ul {
+    display: block;
+    -o-transition: all .3s cubic-bezier(.77,.1,.22,1);
+    -moz-transition: all .3s cubic-bezier(.77,.1,.22,1);
+    -webkit-transition: all .3s cubic-bezier(.77,.1,.22,1);
+    transition: all .3s cubic-bezier(.77,.1,.22,1);
+}
+
+.flowtime h1,.flowtime h2,.flowtime h3,.flowtime h4,.flowtime h5,.flowtime h6 {
+    font-family: AmaranthBold;
+    font-weight: 700;
+    color: #ccc;
+    text-shadow: 1px 2px 0 rgba(255,255,255,.2);
+}
+
+.flowtime h1 {
+    font-size: 3.5rem;
+    line-height: 3rem;
+    margin: 1rem 0 2rem;
+}
+
+.flowtime h2 {
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+    margin: 2rem 0;
+}
+
+.flowtime h3 {
+    font-size: 2rem;
+    line-height: 2rem;
+    margin: 2rem 0;
+}
+
+.flowtime dl,.flowtime h4,.flowtime h5,.flowtime h6,.flowtime ol,.flowtime p,.flowtime ul {
+    font-size: 1.75rem;
+    line-height: 2rem;
+    margin: 2rem 0;
+}
+
+.flowtime dl,.flowtime ol,.flowtime ul {
+    margin: 0 2rem;
+}
+
+.flowtime dd,.flowtime li {
+    line-height: 1.75rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.flowtime dt {
+    position: relative;
+}
+
+.flowtime dl dt:before,.flowtime ul li:before {
+    content: "\2022";
+    text-align: right;
+    color: #fd0;
+    margin-right: .5rem;
+    display: inline-block;
+    position: absolute;
+    left: -1rem;
+}
+
+.flowtime ol {
+    counter-reset: list;
+}
+
+.flowtime ol li:before {
+    content: counter(list) ".";
+    counter-increment: list;
+    font-size: .75em;
+    color: #fd0;
+    margin-right: .5rem;
+    display: inline-block;
+    position: relative;
+    top: -.075em;
+}
+
+.flowtime dl dd {
+    font-size: .8em;
+    margin-left: 1rem;
+}
+
+.flowtime small {
+    font-size: .6em;
+    vertical-align: middle;
+}
+
+.flowtime code,.flowtime pre {
+    font-family: monospace;
+    margin: 1rem 0;
+}
+
+.flowtime strong {
+    font-weight: 700;
+    color: #fd0;
+    text-shadow: 1px 2px 0 rgba(0,0,0,.5);
+}
+
+.flowtime q {
+    quotes: "“" "”";
+}
+
+.flowtime q:before {
+    content: open-quote;
+}
+
+.flowtime q:after {
+    content: close-quote;
+}
+
+.flowtime blockquote {
+    font-size: 1.5rem;
+    margin: 1.5rem 2rem;
+    padding: 1rem;
+    background-color: rgba(0,0,0,.3);
+    border-left: .5rem solid rgba(255,255,255,.5);
+    border-radius: .5rem;
+}
+
+.flowtime blockquote,.flowtime cite,.flowtime q {
+    font-style: italic;
+}
+
+.flowtime .small {
+    font-size: .6em;
+}
+
+.flowtime .attention {
+    color: red;
+    text-shadow: 1px 2px 0 #000,1px -1px 0 rgba(0,0,0,.3),-1px -1px 0 rgba(0,0,0,.3),-1px 1px 0 rgba(0,0,0,.3);
+}
+
+.flowtime sup {
+    font-size: .7em;
+    position: relative;
+    top: -.5em;
+}
+
+.flowtime a,.flowtime a:active,.flowtime a:active img,.flowtime a:focus,.flowtime a:focus img,.flowtime a:hover,.flowtime a:hover img,.flowtime a:link,.flowtime a:visited {
+    color: #32affc;
+    text-shadow: 1px 1px 0 #000;
+    -o-transition: all .3s;
+    -moz-transition: all .3s;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+
+.flowtime a:active,.flowtime a:active img,.flowtime a:focus,.flowtime a:focus img,.flowtime a:hover,.flowtime a:hover img {
+    color: #f90;
+    outline: 0;
+    background-color: rgba(255,255,255,.2);
+    -webkit-box-shadow: 1px 2px 10px 0 rgba(0,0,0,.5);
+    box-shadow: 1px 2px 10px 0 rgba(0,0,0,.5);
+}
+
+.flowtime a:active img,.flowtime a:focus img,.flowtime a:hover img {
+    -webkit-box-shadow: 1px 2px 10px 5px rgba(0,0,0,.5);
+    box-shadow: 1px 2px 10px 5px rgba(0,0,0,.5);
+}
+
+.flowtime .stack {
+    width: 100%;
+    height: 100%;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.flowtime .stacked {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.flowtime img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+
+.flowtime .stack-center {
+    text-align: center;
+    white-space: nowrap;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    bottom: 2rem;
+    left: 2rem;
+}
+
+.flowtime .stack-center:before {
+    content: "";
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.flowtime .stack-center .stacked-center {
+    white-space: normal;
+    max-width: 100%;
+    max-height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.flowtime .stack-center .stacked-center li {
+    text-align: left;
+}
+
+@media screen and (min-height:41em) and (min-width:80em) {
+    html {
+        font-size: 120%;
+    };
+}
+
+@media screen and (min-height:50em) and (min-width:90em) {
+    html {
+        font-size: 140%;
+    };
+}
+
+@media screen and (max-device-height:578px) {
+    html {
+        font-size: 50%;
+    };
+}
+
+.parallax-demo {
+    overflow: hidden;
+}
+
+.parallax-demo .kingmix {
+    position: absolute;
+    left: 20%;
+    bottom: -10%;
+    z-index: 50;
+}
+
+.parallax-demo .sax {
+    position: absolute;
+    left: 6%;
+    bottom: -18%;
+    z-index: 40;
+}
+
+.parallax-demo .tone {
+    position: absolute;
+    left: 49%;
+    bottom: -32%;
+    z-index: 30;
+}

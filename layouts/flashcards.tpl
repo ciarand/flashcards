@@ -3,30 +3,24 @@
 <html>
 <head>{{template "head" .}}</head>
 <body>
-    {{template "before_content" .}}
-    <p class="lead">
-        It looks like you have {{len .Cards}} cards.
+    <div class="flowtime">
+        {{range .Cards}}
+        <div class="ft-section">
+            <div class="ft-page">
+                <div class="stack-center">
+                    <p class="stacked-center">Question: {{.Question}}</p>
+                </div>
+            </div>
+            <div class="ft-page">
+                <div class="stack-center">
+                    <p class="stacked-center">Answer: {{.Answer}}</p>
+                </div>
+            </div>
+        </div>
+        {{end}}
+    </div>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Question</th>
-                    <th>Answer</th>
-                    <th>Class</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{range .Cards}}
-                <tr>
-                    <td>{{.Question}}</td>
-                    <td>{{.Answer}}</td>
-                    <td>{{.Class}}</td>
-                </tr>
-                {{end}}
-            </tbody>
-        </table>
-    </p>
-    {{template "after_content" .}}
+    {{template "tail" .}}
 </body>
 </html>
 {{end}}

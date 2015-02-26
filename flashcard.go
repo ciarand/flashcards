@@ -160,7 +160,11 @@ func run() error {
 	mux := http.NewServeMux()
 
 	mux.Handle("/", &server{fileRepo{"flashcards.txt"}})
-	mux.Handle("/css/", http.FileServer(http.Dir("./static")))
+
+	static := http.FileServer(http.Dir("./static"))
+	mux.Handle("/css/", static)
+	mux.Handle("/js/", static)
+	mux.Handle("/fonts/", static)
 
 	return http.ListenAndServe(":8080", mux)
 }
